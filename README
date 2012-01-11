@@ -1,3 +1,14 @@
+Forked on 11-01-2012
+
+To do:
+	* Add serial pass through
+	* Add RevarLCD type interface
+		- 4x20 Display
+		- 4x4 Keypad
+	* Remove IR Control
+
+
+
 -----------------------
      makeIRbot 1.01
 -----------------------
