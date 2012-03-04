@@ -68,7 +68,7 @@ uint8_t serialIn[32];  // for incoming serial data
 //SoftwareSerial Makerbot(A4, A5);
 
 // makeIRbot Variables
-const float makeIRbot = 1.8;
+const float makeIRbot = 1.83;
 uint8_t machineName[16]; // also contains Firmware versions
 float MotherboardVersion;
 float ExtruderControllerVersion;
@@ -375,6 +375,7 @@ void loop() {
       }
     }
   }
+  
   if (setMoveDown == true){
     menu.moveDown();
     setMoveDown = false;
@@ -396,7 +397,6 @@ void loop() {
   if(Serial.available()){
     Makerbot.print((uint8_t)Serial.read());
   }
-
 */
 }
 
