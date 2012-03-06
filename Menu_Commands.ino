@@ -13,7 +13,8 @@ void menuSetup() {
   m_file.addRight(m_build);
   m_file.addAfter(m_position);        // <-- Position
   m_position.addRight(m_zero);
-  m_zero.addRight(m_jogx);
+  m_zero.addRight(m_jog_unit);
+  m_jog_unit.addRight(m_jogx);
   m_jogx.addRight(m_jogy);
   m_jogy.addRight(m_jogz);
   m_position.addAfter(m_extruder);    // <-- Extruder
@@ -74,7 +75,6 @@ void infoDisplay(){
   lcd.setCursor(0,1); lcd.print("MB Firmware v");lcd.print(MotherboardVersion,1);
   clearLCD(2);
   lcd.setCursor(0,2); lcd.print("EC Firmware v");lcd.print(ExtruderControllerVersion,1);
-
 }
 void flagDisplay(){
   lcd.setCursor(18,0); lcd.write(2);
@@ -170,6 +170,13 @@ void zeroposDisplay(){
   lcd.setCursor(17,0);  lcd.write(5);
   lcd.setCursor(18,0);  lcd.write(2);
   lcd.setCursor(19,0);  lcd.write(3);
+}
+void jogunitDisplay(){
+  lcd.setCursor(17,0);  lcd.write(5);
+  lcd.setCursor(18,0);  lcd.write(2);
+  lcd.setCursor(19,0);  lcd.write(3);
+  lcd.setCursor(8,2); lcd.print(jogDistance[jogIndex],1);lcd.print(" ");   lcd.setCursor(12,2); lcd.print(" mm "); lcd.write(5);
+
 }
 void jogxDisplay(){
   lcd.setCursor(0,0); lcd.print("  ");

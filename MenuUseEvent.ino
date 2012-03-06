@@ -96,6 +96,13 @@ void menuUseEvent(MenuUseEvent used){
     setPosition(0,0,0);
     menu.moveLeft();
   }
+  else if (used.item == m_jog_unit) {
+    // 1,2,5,10,30,60,300 seconds
+    if (jogIndex == 6){
+      jogIndex = 0;}
+    else {jogIndex++;}
+    jogunitDisplay();
+  }  
   else if (used.item == m_jogx) {
     currentPhase++;
     switch (currentPhase) {

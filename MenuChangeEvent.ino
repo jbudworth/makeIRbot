@@ -84,16 +84,19 @@ void menuChangeEvent(MenuChangeEvent changed) {
   else if (changed.to.getName() == m_zero) {
     zeroposDisplay();
   }
+  else if (changed.to.getName() == m_jog_unit) {
+    jogunitDisplay();
+  }
   else if (changed.to.getName() == m_jogx){
     refreshInterval = 250;
     jogxDisplay();
   }
   else if (changed.to.getName() == m_jogx_plus){
-    queuePoint((xpos+jog),ypos,zpos);    
+    queueXPointNS2(jogDistance[jogIndex],0,0, 500);
     setMoveDown = true;
   }
   else if (changed.to.getName() == m_jogx_minus){
-    queuePoint((xpos-jog),ypos,zpos);    
+    queueXPointNS2(-jogDistance[jogIndex],0,0, 500); 
     setMoveUp = true;
   }
   else if (changed.to.getName() == m_jogy){
@@ -101,11 +104,11 @@ void menuChangeEvent(MenuChangeEvent changed) {
     jogyDisplay();
   }
   else if (changed.to.getName() == m_jogy_plus){
-    queuePoint(xpos,ypos+jog,zpos);    
+    queueXPointNS2(0,jogDistance[jogIndex],0, 500);
     setMoveDown = true;
   }
   else if (changed.to.getName() == m_jogy_minus){
-    queuePoint(xpos,ypos-jog,zpos);    
+    queueXPointNS2(0,-jogDistance[jogIndex],0, 500);
     setMoveUp = true;
   }
   else if (changed.to.getName() == m_jogz){
@@ -113,11 +116,11 @@ void menuChangeEvent(MenuChangeEvent changed) {
     jogzDisplay();
   }
   else if (changed.to.getName() == m_jogz_plus){
-    queuePoint(xpos,ypos,zpos+jog);    
+    queueXPointNS2(0,0,jogDistance[jogIndex], 5500);
     setMoveDown = true;
   }
   else if (changed.to.getName() == m_jogz_minus){
-    queuePoint(xpos,ypos,zpos-jog);    
+    queueXPointNS2(0,0,-jogDistance[jogIndex], 5500);
     setMoveUp = true;
   }
 

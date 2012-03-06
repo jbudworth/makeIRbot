@@ -1,43 +1,50 @@
 /*
 
 
-Connect      -----  Flags     -----  Debug  -----  Debug Toggle
+(100)Connect --- (101)Flags --- (102)Debug --- (103)Debug Toggle
   |
   |
   |
-  |                   On                 +             +
-  |                    |                 |             |
-Temperature  -----  Heaters   -----  Extruder  -----  HBP
-  |                    |                 |             |
-  |                   Off                -             -
+  |                       On                 +             +
+  |                        |                 |             |
+(200)Temperature --- (201)Heaters --- (202)Extruder --- (203)HBP
+  |                        |                 |             |
+  |                       Off                -             -
   |
   |
   |
-File         -----  Build
+(300)File --- (301)Build
   |
   |
   |
-  |                                  +            +            +
-  |                                  |            |            |
-Position     -----  Zero  -----  Jog xPos  --- Jog yPos  --- Jog zPos
-  |                                  |            |            | 
-  |                                  -            -            -
+  |                                                      +                +                   +
+  |                                                      |                |                   |
+(400)Position --- (401)Zero --- (402)Jog Unit --- (403)Jog xPos  --- (404)Jog yPos  --- (405)Jog zPos
+  |                                                      |                |                   | 
+  |                                                      -                -                   -
   |
-  |                    Rev           	+
-  |                     |             	|
-Extruder     -----  Fwd/Back  -----  RPM Set
-  |                     |             	|
-  |                    Fwd          	-
-  |
-  |
-  |
-Fan Toggle
+  |                      Rev              	+
+  |                       |                 |
+(500)Extruder  ---  (501)Fwd/Back  ---  (502)RPM Set
+  |                       |                	|
+  |                      Fwd              	-
   |
   |
   |
+(600)Fan Toggle
   |
-Reset
+  |
+  |
+  |
+(700)Reset
+
+22 real menu items, 14 momentary items.
+
+
+
 */
+
+
 
 
 

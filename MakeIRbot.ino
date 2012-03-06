@@ -68,7 +68,7 @@ uint8_t serialIn[32];  // for incoming serial data
 //SoftwareSerial Makerbot(A4, A5);
 
 // makeIRbot Variables
-const float makeIRbot = 1.83;
+const float makeIRbot = 1.9;
 uint8_t machineName[16]; // also contains Firmware versions
 float MotherboardVersion;
 float ExtruderControllerVersion;
@@ -163,6 +163,7 @@ MenuItem m_file =                   MenuItem ("SD File");
 MenuItem m_build =                  MenuItem ("Build File");
 MenuItem m_position =               MenuItem ("Position");
 MenuItem m_zero =                   MenuItem ("Zero Position");
+MenuItem m_jog_unit =               MenuItem ("Jog Unit");
 MenuItem m_jogx =                   MenuItem ("19");
 MenuItem m_jogx_plus =              MenuItem ("20");
 MenuItem m_jogx_minus =             MenuItem ("21");
@@ -195,9 +196,9 @@ int extruder_duration[] = {1,2,5,10,30,60,300};
 int extruder_duration_Index = 3;
 
 //  Distance the build platfom moves each jog
-//float jogDistance[] = {0.1, 0.5, 1, 5, 10, 20, 50};
-//int jogIndex = 3;
-float jog = 5;
+float jogDistance[] = {0.1, 0.5, 1, 5, 10, 20, 50};
+int jogIndex = 3;
+//float jog = 5;
 
 bool setMoveDown = false;
 bool setMoveUp = false;
