@@ -116,7 +116,7 @@ void getPosition() {
     sendBytesWithCRC(data, 1);
 }
 
-void setPosition(float x, float y, float z) { // Hardcoded to X0 Y0 Z0        mm * axis steps
+void setPosition(float x, float y, float z) {
   uint8_t data[] = {0x82, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   long temp = (x * xSteps);
   data[4] = (temp & 0xFF000000)>>24;
@@ -136,6 +136,7 @@ void setPosition(float x, float y, float z) { // Hardcoded to X0 Y0 Z0        mm
   sendBytesWithCRC(data, 13);
 }
 
+// Move to absolute point
 void queuePoint(float x, float y, float z) {
   uint8_t data[] = {0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   long temp = (x * xSteps);
@@ -168,31 +169,69 @@ void getExtendedPosition(){
     sendBytesWithCRC(data, 1);
 }
 
-void queueXPointNS(float rpm, uint32_t duration, bool dir){
+// For X Y Z Jogging
+void queueXPointNS2(float x, float y, float z, long duration){ // Duration in ms
+  uint8_t data[] = {0x8E, 
+  0x00, 0x00, 0x00, 0x00,   //X
+  0x00, 0x00, 0x00, 0x00,   //Y
+  0x00, 0x00, 0x00, 0x00,   //Z
+  0x00, 0x00, 0x00, 0x00,   //A
+  0x00, 0x00, 0x00, 0x00,   //B
+  0x00, 0x00, 0x00, 0x00,    //duration
+  0x1F};                     // Relative or absolute
+  long temp = (x * xSteps);
+  data[1] = (temp & 0x000000FF);
+  data[2] = (temp & 0x0000FF00)>>8;
+  data[3] = (temp & 0x00FF0000)>>16;
+  data[4] = (temp & 0xFF000000)>>24;
+  temp = (y * ySteps);
+  data[5] = (temp & 0x000000FF);
+  data[6] = (temp & 0x0000FF00)>>8;
+  data[7] = (temp & 0x00FF0000)>>16;
+  data[8] = (temp & 0xFF000000)>>24;
+  temp = (z * zSteps);
+  data[9] =  (temp & 0x000000FF);
+  data[10] = (temp & 0x0000FF00)>>8;
+  data[11] = (temp & 0x00FF0000)>>16;
+  data[12] = (temp & 0xFF000000)>>24;
+  temp = duration * 1000;
+  data[21] = (temp & 0x000000FF);
+  data[22] = (temp & 0x0000FF00)>>8;
+  data[23] = (temp & 0x00FF0000)>>16;
+  data[24] = (temp & 0xFF000000)>>24;
+  sendBytesWithCRC(data,sizeof(data)); //26
+  delay(200);
+  disableSteppers();
+}
+
+// For extruder moves
+void queueXPointNS(float rpm, uint32_t duration, bool dir){ // Used for Extruder Control
   uint8_t data0[] = {0x88, 0x00, 0x0A, 0x01, 0x03};
-    sendBytesWithCRC(data0, 5);
+  sendBytesWithCRC(data0, 5);
   uint8_t data1[] = {0x88, 0x00, 0x04, 0x01, 0xFF};
-    sendBytesWithCRC(data1, 5);
-    uint8_t data[] = {0x8E, 
-    0x00, 0x00, 0x00, 0x00,   //X
-    0x00, 0x00, 0x00, 0x00,   //Y
-    0x00, 0x00, 0x00, 0x00,   //Z
-    0x00, 0x00, 0x00, 0x00,   //A
-    0x00, 0x00, 0x00, 0x00,   //B
-   0x00, 0x00, 0x00, 0x00,    //duration
-   0x1F};                     // Relative or absolute
+  sendBytesWithCRC(data1, 5);
+  uint8_t data[] = {0x8E, 
+  0x00, 0x00, 0x00, 0x00,   //X
+  0x00, 0x00, 0x00, 0x00,   //Y
+  0x00, 0x00, 0x00, 0x00,   //Z
+  0x00, 0x00, 0x00, 0x00,   //A
+  0x00, 0x00, 0x00, 0x00,   //B
+  0x00, 0x00, 0x00, 0x00,    //duration
+  0x1F};                     // Relative or absolute
 int32_t temp = (((aSteps * rpm)/60) * duration);
   if (dir == CW){temp = temp * -1;}
-    data[13] = (temp & 0x000000FF);
-    data[14] = (temp & 0x0000FF00)>>8;
-    data[15] = (temp & 0x00FF0000)>>16;
-    data[16] = (temp & 0xFF000000)>>24;
-    uint32_t temp1 = duration * 1000000;
-    data[21] = (temp1 & 0x000000FF);
-    data[22] = (temp1 & 0x0000FF00)>>8;
-    data[23] = (temp1 & 0x00FF0000)>>16;
-    data[24] = (temp1 & 0xFF000000)>>24;
-    sendBytesWithCRC(data,sizeof(data)); //26
+  data[13] = (temp & 0x000000FF);
+  data[14] = (temp & 0x0000FF00)>>8;
+  data[15] = (temp & 0x00FF0000)>>16;
+  data[16] = (temp & 0xFF000000)>>24;
+  uint32_t temp1 = duration * 1000000;
+  data[21] = (temp1 & 0x000000FF);
+  data[22] = (temp1 & 0x0000FF00)>>8;
+  data[23] = (temp1 & 0x00FF0000)>>16;
+  data[24] = (temp1 & 0xFF000000)>>24;
+  sendBytesWithCRC(data,sizeof(data)); //26
+  delay(200);
+  disableSteppers();
 }
 
 void extendedStop(){
